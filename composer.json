@@ -1,0 +1,21 @@
+{
+  "name": "rudnikov/rzd-tickets-api",
+  "description": "Микро API для поиска билетов",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Anton Rudnikov",
+      "email": "anton@rudnikov.net"
+    }
+  ],
+  "require": {
+    "php": ">=7.1.0",
+    "guzzlehttp/guzzle": "^6.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "Rudnikov\\RzdTicketsApi\\": "src/"
+    }
+  }
+}
