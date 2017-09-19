@@ -20,7 +20,7 @@ class RzdApi
             'code0'      => $options->getOriginCode(),
             'st1'        => $options->getDestinationCode(),
             'code1'      => $options->getDestinationCode(),
-            'dir'        => $options->getDestinationCode(),
+            'dir'        => 0,
             'dt0'        => (new \DateTime($options->getDate()))->format('d.m.Y'),
             'dt1'        => (new \DateTime())->format('d.m.Y'),
             'checkSeats' => 1
