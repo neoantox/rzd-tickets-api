@@ -52,7 +52,7 @@ class RzdApi
         }, $data);
 
         return array_filter($data, function(array $station) use ($name) {
-           return mb_strpos($station['name'], $name) === 0;
+            return mb_strpos($station['name'], $name) === 0;
         });
     }
 }

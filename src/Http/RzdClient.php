@@ -13,7 +13,7 @@ class RzdClient
     /**
      * @var ClientInterface
      */
-    private $client;
+    protected $client;
 
     /**
      * RzdRequest constructor.
@@ -33,7 +33,7 @@ class RzdClient
 
         $response = $this->client->request($method, $uri, $options);
 
-        while (($rid = $this->getResponseRID($response)) !== null) {
+        while (($rid = $this->getResponseRid($response)) !== null) {
             sleep(2);
 
             $options[RequestOptions::FORM_PARAMS]['rid'] = $rid;
@@ -43,7 +43,7 @@ class RzdClient
         return \GuzzleHttp\json_decode((string) $response->getBody(), true);
     }
 
-    private function getResponseRID(ResponseInterface $response): ?int
+    protected function getResponseRid(ResponseInterface $response): ?int
     {
         $data = \GuzzleHttp\json_decode((string) $response->getBody());
 
@@ -54,7 +54,7 @@ class RzdClient
         return null;
     }
 
-    private function buildUri(string $uri, array $getParams = []): string
+    protected function buildUri(string $uri, array $getParams = []): string
     {
         if (empty($getParams)) {
             return $uri;
@@ -62,12 +62,12 @@ class RzdClient
 
         $params = http_build_query($getParams);
 
-        return strpos($uri, '?') === FALSE
+        return strpos($uri, '?') === false
             ? $uri . '?' . $params
             : $uri . '&' . $params;
     }
 
-    private function getHeaders(): array
+    protected function getHeaders(): array
     {
         return [
             'X-Requested-With' => 'XMLHttpRequest',
@@ -83,29 +83,24 @@ class RzdClient
         ];
     }
 
-    private function makeClient(): ClientInterface
+    protected function makeClient(): ClientInterface
     {
-        if ($this->client === null) {
+        return new Client([
+            'base_uri' => 'https://m.rzd.ru/',
+            'timeout'  => 2.0,
 
-            $this->client = new Client([
-                'base_uri' => 'https://m.rzd.ru/',
-                'timeout'  => 2.0,
-
-                'cookies'  => new CookieJar(true, [
-                    [
-                        'Name'   => 'lang',
-                        'Value'  => 'ru',
-                        'Domain' => 'rzd.ru'
-                    ],
-                    [
-                        'Name'   => 'AuthFlag',
-                        'Value'  => 'false',
-                        'Domain' => 'rzd.ru'
-                    ],
-                ]),
-            ]);
-        }
-
-        return $this->client;
+            'cookies'  => new CookieJar(true, [
+                [
+                    'Name'   => 'lang',
+                    'Value'  => 'ru',
+                    'Domain' => 'rzd.ru'
+                ],
+                [
+                    'Name'   => 'AuthFlag',
+                    'Value'  => 'false',
+                    'Domain' => 'rzd.ru'
+                ],
+            ]),
+        ]);
     }
 }
