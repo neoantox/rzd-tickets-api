@@ -71,7 +71,7 @@ class RzdClient
     {
         return [
             'X-Requested-With' => 'XMLHttpRequest',
-            'Referer'          => 'https://m.rzd.ru/?layer_name=mpass_trains',
+            'Referer'          => 'http://m.rzd.ru/?layer_name=mpass_trains',
             'Accept'           => 'application/json, text/javascript, */*; q=0.01',
             'Accept-Encoding'  => 'gzip, deflate, br',
             'Accept-Language'  => 'ru,en;q=0.8,la;q=0.6,id;q=0.4',
@@ -86,7 +86,7 @@ class RzdClient
     protected function makeClient(): ClientInterface
     {
         return new Client([
-            'base_uri' => 'https://m.rzd.ru/',
+            'base_uri' => 'http://m.rzd.ru/',
             'timeout'  => 2.0,
 
             'cookies'  => new CookieJar(true, [
