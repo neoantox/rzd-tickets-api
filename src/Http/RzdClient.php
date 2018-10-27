@@ -33,6 +33,10 @@ class RzdClient
 
         $response = $this->client->request($method, $uri, $options);
 
+        if (((string) $response->getBody()) === '') {
+            return [];
+        }
+
         while (($rid = $this->getResponseRid($response)) !== null) {
             sleep(2);
 
@@ -47,7 +51,7 @@ class RzdClient
     {
         $data = \GuzzleHttp\json_decode((string) $response->getBody());
 
-        if ($data->result === 'RID') {
+        if (\is_object($data) && $data->result === 'RID') {
             return $data->RID;
         }
 
